@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, StaticRouter, Route, Switch } from 'react-router-dom';
 import PageLayout from '../../containers/PageLayout';
-import Greetings from '../Greetings';
 import styles from './styles.scss';
 
 

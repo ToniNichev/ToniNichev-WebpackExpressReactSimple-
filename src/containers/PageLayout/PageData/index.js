@@ -16,15 +16,7 @@ export default {
               name: "About"
             }
           ] 
-        },
-        {
-          span: 12,
-          components:[
-            {
-              name: "Home"
-            }
-          ] 
-        }          
+        }         
       ]    
   },
   '/home' : {
@@ -41,7 +33,7 @@ export default {
           span: 12,
           components:[
             {
-              name: "About"
+              name: "Home"
             }
           ] 
         },        
