@@ -1,22 +1,33 @@
-const webpack = require('webpack');
+const path = require('path');
+const nodeExternals = require('webpack-node-externals');
+const webpack =require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const Loadable  = require('react-loadable/webpack');
 const getEnvironmentConstants = require('../getEnvironmentConstants');
+const NodemonPlugin = require('nodemon-webpack-plugin');
+
+const WEBPACK_PORT = 3007;
+
 
 module.exports = {
   mode: 'development',
   devtool: '',
+  target: "node",
+  node: {
+    __dirname: false, // use the standard Node behavior of __dirname
+  },
+  externals: [nodeExternals()],
 
-  entry: [
-    './src/index.js',
-  ],
+  entry: {
+    server: './ssr-server.js'
+  },
 
   output: {
     filename: '[name]-bundle.js',
-    publicPath: '/dist/',
+    path: path.resolve(__dirname, '../', 'server-build'),
+    publicPath: `http://localhost:${WEBPACK_PORT}/dist/`
   },  
-
+  
   module: {
     rules: [
       {
@@ -73,15 +84,22 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.DefinePlugin({ 'process.env' : getEnvironmentConstants() } ),  
-    new Loadable.ReactLoadablePlugin({
-        filename: './dist/loadable-manifest.json',
-      }),  
     new MiniCssExtractPlugin({
-        // these are optional
         filename: "[name].css",
         chunkFilename: "[id].css"
-    }),
-    new OptimizeCSSAssetsPlugin({})    
+    }), 
+    new OptimizeCSSAssetsPlugin({}),  
+    // on the server we still need one bundle
+    new webpack.optimize.LimitChunkCountPlugin({
+        maxChunks: 1
+    }),    
+    new webpack.DefinePlugin({ 'process.env' : getEnvironmentConstants() } ),  
+
+    new NodemonPlugin({
+      watch: path.resolve('./server-build'),
+      ext: 'js,json,jsx',
+      script: `./server-build/server-bundle.js`,
+      verbose: true,
+    }),    
   ]
 };

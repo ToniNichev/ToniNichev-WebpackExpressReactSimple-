@@ -1,4 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
+import styles from './styles.scss';
 
 const CHANGE_USERNAME = 'CHANGE_USERNAME';
 
@@ -17,7 +18,7 @@ const AboutContainer = (state) => {
   let componentA = (<p>This is <input type="text" name="username" value={state.userName} onChange={() => { handleChange() }} /></p>);
   let componentB = (<p>Another component</p>)
   return (
-    <div>
+    <div className={styles.wrapper}>
       {!which ? componentA : componentB}
       <button onClick={ () => {switchComponents() } }>TEST</button>
     </div>
