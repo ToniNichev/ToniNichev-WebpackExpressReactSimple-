@@ -29,7 +29,7 @@ module.exports = {
 
       // SCSS
       {
-        test: /\.scss$/,
+        test: /(.*)\/About\/styles.scss$/,
         use: [
           MiniCssExtractPlugin.loader,
           {
@@ -54,6 +54,34 @@ module.exports = {
           }
         ],
       },
+
+      {
+        test: /^((?!(About)).)*\.scss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[folder]-[local]--[hash:base64:5]',
+              },
+              importLoaders: 2,              
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [require('autoprefixer')()],
+              sourceMap: true              
+            },
+          },
+          {
+            loader: 'sass-loader',
+          }
+        ],
+      },
+
       // images
       {
         test: /\.(png|jp(e*)g|svg)$/,  
