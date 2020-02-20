@@ -2,7 +2,6 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const webpack =require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const getEnvironmentConstants = require('../getEnvironmentConstants');
 const NodemonPlugin = require('nodemon-webpack-plugin');
 
@@ -11,7 +10,7 @@ const WEBPACK_PORT = 3007;
 
 module.exports = {
   mode: 'development',
-  devtool: '',
+  devtool: 'source-map',
   target: "node",
   node: {
     __dirname: false, // use the standard Node behavior of __dirname
@@ -23,8 +22,8 @@ module.exports = {
   },
 
   output: {
+    path: path.resolve(__dirname, '../', 'server-build'),    
     filename: '[name]-bundle.js',
-    path: path.resolve(__dirname, '../', 'server-build'),
     publicPath: `http://localhost:${WEBPACK_PORT}/dist/`
   },  
   
@@ -42,7 +41,6 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
@@ -54,14 +52,10 @@ module.exports = {
             }
           },
           {
-            loader: 'postcss-loader',
-            options: {
-              plugins: () => [require('autoprefixer')()],
-              sourceMap: true              
-            },
-          },
-          {
             loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },            
           }
         ],
       },
@@ -84,11 +78,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin({
-        filename: "[name].css",
-        chunkFilename: "[id].css"
-    }), 
-    new OptimizeCSSAssetsPlugin({}),  
     // on the server we still need one bundle
     new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 1
