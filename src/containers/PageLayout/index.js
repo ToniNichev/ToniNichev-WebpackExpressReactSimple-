@@ -10,7 +10,6 @@ class PageLayout extends Component {
     } 
   
     render() {
-
       const url = this.props.location.pathname;
       const page = PageData[url];
 
