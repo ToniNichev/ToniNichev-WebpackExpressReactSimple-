@@ -100,6 +100,8 @@ module.exports = {
       ext: 'js,json,jsx',
       script: `./server-build/server-bundle.js`,
       verbose: true,
+          // Node arguments.
+      nodeArgs: [ '--inspect' ]
     }),    
   ]
 };

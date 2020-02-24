@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import ComponentList from './ComponentList';
-import Loading from '../../components/Loading';
-import { graphql } from 'react-apollo';
 import PageData from './PageData';
 const styles = require('./styles.scss');
 class PageLayout extends Component {

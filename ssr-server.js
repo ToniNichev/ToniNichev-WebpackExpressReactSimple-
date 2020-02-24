@@ -15,6 +15,7 @@ app.use('/dist', express.static('dist')); // to serve frontent prod static files
 app.use('/favicon.ico', express.static('./static-assets/favicon.ico'));
 
 app.get('/*', (req, res) => {   
+  debugger;
 
   // Prepare to get list of all modules that have to be loaded for this route
   let modules = [];
