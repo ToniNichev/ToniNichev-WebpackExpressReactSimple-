@@ -101,7 +101,7 @@ module.exports = {
       script: `./server-build/server-bundle.js`,
       verbose: true,
           // Node arguments.
-      nodeArgs: [ '--inspect' ]
+      // nodeArgs: [ '--inspect' ]
     }),    
   ]
 };

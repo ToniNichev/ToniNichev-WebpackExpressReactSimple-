@@ -95,7 +95,7 @@ module.exports = {
       }),
 
     // hot reload
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin({multiStep: true}),
 
     new MiniCssExtractPlugin({
         // these are optional
