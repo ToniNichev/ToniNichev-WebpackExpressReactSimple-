@@ -1,13 +1,13 @@
 import React from 'react';
 
-const Html = ({ content, cssBundles, jsBundles }) => (
+const Html = ({ content, cssBundles, jsBundles, apiData }) => (
   <html lang="en">
   <head>
     <meta charSet="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Server Side Rendering and Bundle Splitting</title>
     <link
-    href="/dist/main.css"
+    href="http://localhost:8000/dist/main.css"
     rel="stylesheet"
     as="style"
     media="screen, projection"
@@ -18,7 +18,7 @@ const Html = ({ content, cssBundles, jsBundles }) => (
     {
       cssBundles.map( (bundle) => 
         (<link
-          href={`${bundle.publicPath}`}
+          href={`http://localhost:8000${bundle.publicPath}`}
           rel="stylesheet"
           as="style"
           media="screen, projection"
@@ -27,11 +27,14 @@ const Html = ({ content, cssBundles, jsBundles }) => (
         />))
     }
 
-    {jsBundles.map( ( {file}) => (<script src={`/dist/${file}`}>{file}</script>) )}
+    {jsBundles.map( ( {file}) => (<script src={`http://localhost:8000/dist/${file}`}>{file}</script>) )}
+
+    <script dangerouslySetInnerHTML={{
+          __html: `window.__API_DATA__=${JSON.stringify(apiData)}`}} />    
   </head>
   <body cz-shortcut-listen="true">
     <div id="root" dangerouslySetInnerHTML={{ __html: content }} />  
-    <script src="/dist/main-bundle.js"></script>
+    <script src="http://localhost:8000/dist/main-bundle.js"></script>
   </body>
 </html>  
 

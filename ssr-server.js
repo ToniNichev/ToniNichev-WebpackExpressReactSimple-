@@ -1,5 +1,6 @@
 import React from 'react';
 import express from 'express';
+import fetch from 'isomorphic-fetch';
 import App from './src/components/App';
 import Loadable from 'react-loadable';
 import manifest from './dist/loadable-manifest.json';
@@ -14,9 +15,7 @@ app.use('/server-build', express.static('./server-build'));
 app.use('/dist', express.static('dist')); // to serve frontent prod static files
 app.use('/favicon.ico', express.static('./static-assets/favicon.ico'));
 
-app.get('/*', (req, res) => {   
-  debugger;
-
+function response(req, res, apiData) {
   // Prepare to get list of all modules that have to be loaded for this route
   let modules = [];
 
@@ -33,14 +32,30 @@ app.get('/*', (req, res) => {
   const cssBundles = bundles.filter(bundle => bundle && bundle.file.split('.').pop() === 'css');
   const jsBundles = bundles.filter(bundle => bundle && bundle.file.split('.').pop() === 'js');
 
-console.log(">>>manifest>>>", manifest);
-console.log(">>cssBundles>>", cssBundles);
+  // console.log(">>>manifest>>>", manifest);
+  // console.log(">>cssBundles>>", cssBundles);
 
-  const html = <Html content={HTML_content} cssBundles={cssBundles} jsBundles={jsBundles} />;
+  const html = <Html content={HTML_content} cssBundles={cssBundles} jsBundles={jsBundles} apiData={apiData}/>;
 
   res.status(200);
   res.send(`<!doctype html>\n${ReactDOMServer.renderToStaticMarkup(html)}`);
   res.end();
+}
+
+
+app.get('/*', (req, res) => {   
+
+  
+  fetch('https://learnappmaking.com/ex/users.json')
+  .then(function(response) {
+      if (response.status >= 400) {
+          throw new Error("Bad response from server");
+      }
+      return response.json();
+  })
+  .then(function(apiData) {
+    response(req, res, apiData);
+  });  
 });
 
 Loadable.preloadAll().then(() => {

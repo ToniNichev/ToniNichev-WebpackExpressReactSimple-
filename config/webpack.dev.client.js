@@ -1,33 +1,37 @@
-const path = require('path');
-const nodeExternals = require('webpack-node-externals');
-const webpack =require('webpack');
+const webpack = require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const Loadable  = require('react-loadable/webpack');
 const getEnvironmentConstants = require('../getEnvironmentConstants');
-const NodemonPlugin = require('nodemon-webpack-plugin');
+const path = require('path');
 
-const WEBPACK_PORT = 3007;
-
+const projectRootPath = path.resolve(__dirname, '../');
 
 module.exports = {
   mode: 'development',
   devtool: 'source-map',
-  target: "node",
-  node: {
-    __dirname: false, // use the standard Node behavior of __dirname
-  },
-  externals: [nodeExternals()],
 
-  entry: {
-    server: './ssr-server.js'
-  },
+  entry: [
+    './src/index.js',
+  ],
+
+  devServer: {
+    staticOptions: {
+      redirect: true,
+    },
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    disableHostCheck: true,
+    hot: true,
+    port: 8000,
+    noInfo: true,
+  },  
 
   output: {
+    path: `${projectRootPath}/src`,    
     filename: '[name]-bundle.js',
-    path: path.resolve(__dirname, '../', 'server-build'),
     publicPath: `http://localhost:8000/dist/`
   },  
-  
+
   module: {
     rules: [
       {
@@ -84,24 +88,21 @@ module.exports = {
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin({
-        filename: "[name].css",
-        chunkFilename: "[id].css"
-    }), 
-    new OptimizeCSSAssetsPlugin({}),  
-    // on the server we still need one bundle
-    new webpack.optimize.LimitChunkCountPlugin({
-        maxChunks: 1
-    }),    
     new webpack.DefinePlugin({ 'process.env' : getEnvironmentConstants() } ),  
 
-    new NodemonPlugin({
-      watch: path.resolve('./server-build'),
-      ext: 'js,json,jsx',
-      script: `./server-build/server-bundle.js`,
-      verbose: true,
-          // Node arguments.
-      nodeArgs: [ '--inspect' ]
-    }),    
+    new Loadable.ReactLoadablePlugin({
+        filename: './dist/loadable-manifest.json',
+      }),
+
+    // hot reload
+    new webpack.HotModuleReplacementPlugin(),
+
+    new MiniCssExtractPlugin({
+        // these are optional
+        filename: "[name].css",
+        chunkFilename: "[id].css"
+    }),
+    
+    new OptimizeCSSAssetsPlugin({})    
   ]
 };
