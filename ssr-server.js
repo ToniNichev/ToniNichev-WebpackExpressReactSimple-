@@ -8,7 +8,9 @@ import { getBundles } from 'react-loadable/webpack';
 import ReactDOMServer from 'react-dom/server';
 import Html from './html.js';
 
-const PORT = process.env.PROD_SERVER_PORT;
+
+const {APP_HOST, SERVER_PORT} = process.env;
+
 const app = express();
 
 app.use('/server-build', express.static('./server-build'));
@@ -59,7 +61,7 @@ app.get('/*', (req, res) => {
 });
 
 Loadable.preloadAll().then(() => {
-  app.listen(PORT, () => {
-    console.log(`😎 Server is listening on port ${PORT}`);
+  app.listen(SERVER_PORT, () => {
+    console.log(`😎 Server is listening on port ${SERVER_PORT}`);
   });
 });

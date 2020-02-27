@@ -1,12 +1,12 @@
-const getEnvironmentConstants = require('../getEnvironmentConstants');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const webpack =require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const NodemonPlugin = require('nodemon-webpack-plugin');
+const getEnvironmentConstants = require('../getEnvironmentConstants');
 
-const env = getEnvironmentConstants();
+var e = getEnvironmentConstants();
 
 module.exports = {
   mode: 'development',
@@ -24,7 +24,7 @@ module.exports = {
   output: {
     filename: '[name]-bundle.js',
     path: path.resolve(__dirname, '../', 'server-build'),
-    publicPath: `http://${env.APP_HOST}:${env.DEV_SERVER_PORT}/dist/`
+
   },  
   
   module: {
@@ -87,11 +87,14 @@ module.exports = {
         filename: "[name].css",
         chunkFilename: "[id].css"
     }), 
+
     new OptimizeCSSAssetsPlugin({}),  
+
     // on the server we still need one bundle
     new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 1
     }),    
+
     new webpack.DefinePlugin({ 'process.env' : getEnvironmentConstants() } ),  
 
     new NodemonPlugin({
@@ -99,8 +102,8 @@ module.exports = {
       ext: 'js,json,jsx',
       script: `./server-build/server-bundle.js`,
       verbose: true,
-          // Node arguments.
-      // nodeArgs: [ '--inspect' ]
+      // Node arguments.
+      // nodeArgs: [ '--inspect-brk' ]
     }),    
   ]
 };

@@ -1,13 +1,15 @@
 import React from 'react';
 
+const publicPath = `http://${process.env.APP_HOST}:${process.env.WEBPACK_SERVER_PORT}/dist/`;
+
 const Html = ({ content, cssBundles, jsBundles, apiData }) => (
-  <html lang="en">
+  <html lang="en">  
   <head>
     <meta charSet="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Server Side Rendering and Bundle Splitting</title>
     <link
-    href="http://localhost:8000/dist/main.css"
+    href={`${publicPath}main.css`}
     rel="stylesheet"
     as="style"
     media="screen, projection"
@@ -18,7 +20,7 @@ const Html = ({ content, cssBundles, jsBundles, apiData }) => (
     {
       cssBundles.map( (bundle) => 
         (<link
-          href={`http://localhost:8000${bundle.publicPath}`}
+          href={`${bundle.publicPath}`}
           rel="stylesheet"
           as="style"
           media="screen, projection"
@@ -27,14 +29,14 @@ const Html = ({ content, cssBundles, jsBundles, apiData }) => (
         />))
     }
 
-    {jsBundles.map( ( {file}) => (<script src={`http://localhost:8000/dist/${file}`}>{file}</script>) )}
+    {jsBundles.map( ( {file}) => (<script src={`${publicPath}${file}`}>{file}</script>) )}
 
     <script dangerouslySetInnerHTML={{
           __html: `window.__API_DATA__=${JSON.stringify(apiData)}`}} />    
   </head>
   <body cz-shortcut-listen="true">
     <div id="root" dangerouslySetInnerHTML={{ __html: content }} />  
-    <script src="http://localhost:8000/dist/main-bundle.js"></script>
+    <script src={`${publicPath}main-bundle.js`}></script>
   </body>
 </html>  
 

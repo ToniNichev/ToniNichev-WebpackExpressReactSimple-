@@ -14,7 +14,7 @@
     "build-dev-ssr": "webpack --config ./config/webpack.dev.ssr.server.js --watch",
     "build-ssr": "webpack --config ./config/webpack.ssr.server.js",
     "run-prod-server": "node ./server-build/server-bundle.js",
-    "start-dev": "yarn clean; yarn build-dev; yarn build-ssr; yarn run-dev-server",
+    "start-dev": "yarn clean; yarn build-dev; yarn build-dev-ssr",
     "start-prod": "yarn clean; yarn build-prod; yarn build-ssr; yarn run-prod-server",
     "test": "jest"
   },

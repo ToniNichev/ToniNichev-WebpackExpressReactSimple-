@@ -73,15 +73,18 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.DefinePlugin({ 'process.env' : getEnvironmentConstants() } ),  
+    new webpack.DefinePlugin({ 'process.env' : getEnvironmentConstants() } ), 
+
     new Loadable.ReactLoadablePlugin({
         filename: './dist/loadable-manifest.json',
-      }),  
+    }),  
+
     new MiniCssExtractPlugin({
         // these are optional
         filename: "[name].css",
         chunkFilename: "[id].css"
     }),
+    
     new OptimizeCSSAssetsPlugin({})    
   ]
 };
