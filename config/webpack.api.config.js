@@ -1,26 +1,16 @@
-const webpack = require('webpack');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const Loadable  = require('react-loadable/webpack');
 const getEnvironmentConstants = require('../getEnvironmentConstants');
-
-const publicPath = `http://${process.env.APP_HOST}:${process.env.ASSETS_SERVER_PORT}/dist/`;
-
-console.log(`Assets will be served from: ${process.env.APP_HOST} ${process.env.ASSETS_SERVER_PORT}`);
+const webpack =require('webpack');
 
 module.exports = {
-  mode: 'production',
-  devtool: '',
-
+  mode: 'development',
+  devtool: 'eval-source-map',
   entry: [
     './src/index.js',
   ],
-
   output: {
     filename: '[name]-bundle.js',
-    publicPath
+    publicPath: '/dist/',
   },  
-
   module: {
     rules: [
       {
@@ -35,7 +25,7 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          'style-loader',
           {
             loader: 'css-loader',
             options: {
@@ -77,18 +67,9 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.DefinePlugin({ 'process.env' : getEnvironmentConstants() } ), 
+    new webpack.DefinePlugin({ 'process.env' : getEnvironmentConstants() } ),  
 
-    new Loadable.ReactLoadablePlugin({
-        filename: './dist/loadable-manifest.json',
-    }),  
-
-    new MiniCssExtractPlugin({
-        // these are optional
-        filename: "[name].css",
-        chunkFilename: "[id].css"
-    }),
-
-    new OptimizeCSSAssetsPlugin({})    
+    new webpack.HotModuleReplacementPlugin()
   ]
 };
+

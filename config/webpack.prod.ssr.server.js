@@ -4,7 +4,8 @@ const webpack =require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const getEnvironmentConstants = require('../getEnvironmentConstants');
-console.log(">>>>>>>>>", process.env.ASSETS_SERVER_PORT);
+
+console.log(`Server is starting at: ${process.env.APP_HOST} ${process.env.SERVER_PORT}`);
 
 module.exports = {
   mode: 'development',

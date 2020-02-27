@@ -1,6 +1,6 @@
 import WebpackDevServer from 'webpack-dev-server';
 import webpack from 'webpack';
-import config from './webpack.api.config.js';
+import config from './config/webpack.api.config.js';
 require('dotenv').config();
 
 
@@ -11,4 +11,4 @@ const server = new WebpackDevServer(compiler, {
   historyApiFallback: true,
   disableHostCheck: true,
 });
-server.listen(8080, 'localhost', function() {});
+server.listen(process.env.SERVER_PORT, 'localhost', function() {});
