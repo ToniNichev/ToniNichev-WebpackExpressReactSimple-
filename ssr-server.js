@@ -46,8 +46,6 @@ function response(req, res, apiData) {
 
 
 app.get('/*', (req, res) => {   
-
-  
   fetch('https://learnappmaking.com/ex/users.json')
   .then(function(response) {
       if (response.status >= 400) {
