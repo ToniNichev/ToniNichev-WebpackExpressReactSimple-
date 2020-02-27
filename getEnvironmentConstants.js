@@ -1,20 +1,15 @@
 const fs = require('fs');
-// Load environment variables from these files
-const dotenvFiles = [
-  '.env'
-];
 
 // expose environment variables to the frontend
 const frontendConstants = [
   'APP_NAME',
   'APP_HOST',
   'SERVER_PORT',
-  'WEBPACK_SERVER_PORT'
+  'ASSETS_SERVER_PORT'
 ];
 
 const { NODE_ENV } = process.env;
 
-// Temporary until we setup our ENV variables infrastructure
 const path = fs.existsSync(`.env.${NODE_ENV}`)
   ? `.env.${NODE_ENV}`
   : '.env';
@@ -35,8 +30,6 @@ dotenvFiles.forEach(dotenvFile => {
 */
 
 function getEnvironmentConstants() {
-  
-
   
   const arrayToObject = (array) =>
   array.reduce((obj, item, key) => {

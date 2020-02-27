@@ -4,6 +4,9 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const Loadable  = require('react-loadable/webpack');
 const getEnvironmentConstants = require('../getEnvironmentConstants');
 
+const publicPath = `http://${process.env.APP_HOST}:${process.env.ASSETS_SERVER_PORT}/dist/`;
+
+console.log("22222 ", process.env.ASSETS_SERVER_PORT);
 module.exports = {
   mode: 'production',
   devtool: '',
@@ -14,7 +17,7 @@ module.exports = {
 
   output: {
     filename: '[name]-bundle.js',
-    publicPath: '/dist/',
+    publicPath
   },  
 
   module: {
@@ -84,7 +87,7 @@ module.exports = {
         filename: "[name].css",
         chunkFilename: "[id].css"
     }),
-    
+
     new OptimizeCSSAssetsPlugin({})    
   ]
 };

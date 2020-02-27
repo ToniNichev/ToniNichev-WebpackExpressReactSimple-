@@ -5,7 +5,7 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const Loadable  = require('react-loadable/webpack');
 const path = require('path');
 
-const publicPath = `http://${process.env.APP_HOST}:${process.env.WEBPACK_SERVER_PORT}/dist/`;
+const publicPath = `http://${process.env.APP_HOST}:${process.env.ASSETS_SERVER_PORT}/dist/`;
 
 const projectRootPath = path.resolve(__dirname, '../');
 
@@ -24,7 +24,7 @@ module.exports = {
     headers: { 'Access-Control-Allow-Origin': '*' },
     disableHostCheck: true,
     hot: true,
-    port: process.env.WEBPACK_SERVER_PORT,
+    port: process.env.ASSETS_SERVER_PORT,
     noInfo: true,
   },  
 
@@ -32,7 +32,6 @@ module.exports = {
     path: `${projectRootPath}/src`,    
     filename: '[name]-bundle.js',
     publicPath
-    //publicPath: `http://localhost:8000/dist/`
   },  
 
   module: {

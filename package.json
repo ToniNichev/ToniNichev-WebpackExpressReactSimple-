@@ -6,16 +6,15 @@
   "scripts": {
     "start-cli": "webpack-dev-server --disable-host-check --hot --history-api-fallback --config webpack.cli.config.js",
     "start-api": "babel-node server-api.js",
-    "start-middleware": "babel-node server-middleware.js",
     "clean": "rm -rf ./dist ./server-build",
     "lint": "eslint .",
-    "build-prod": "webpack --config ./config/webpack.prod.client.js",
+    "build-prod": "NODE_ENV=production webpack --config ./config/webpack.prod.client.js",
     "build-dev": "webpack-dev-server --config ./config/webpack.dev.client.js",
     "build-dev-ssr": "webpack --config ./config/webpack.dev.ssr.server.js --watch",
-    "build-ssr": "webpack --config ./config/webpack.ssr.server.js",
+    "build-prod-ssr": "NODE_ENV=production webpack --config ./config/webpack.prod.ssr.server.js",
     "run-prod-server": "node ./server-build/server-bundle.js",
     "start-dev": "yarn clean; yarn build-dev; yarn build-dev-ssr",
-    "start-prod": "yarn clean; yarn build-prod; yarn build-ssr; yarn run-prod-server",
+    "start-prod": "yarn clean; yarn build-prod; yarn build-prod-ssr; yarn run-prod-server",
     "test": "jest"
   },
   "jest": {

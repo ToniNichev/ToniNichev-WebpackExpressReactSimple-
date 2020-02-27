@@ -1,10 +1,10 @@
-const environmentConstants = require('./getEnvironmentConstants');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const webpack =require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const getEnvironmentConstants = require('../getEnvironmentConstants');
+console.log(">>>>>>>>>", process.env.ASSETS_SERVER_PORT);
 
 module.exports = {
   mode: 'development',
