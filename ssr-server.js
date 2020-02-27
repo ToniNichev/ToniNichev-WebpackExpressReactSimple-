@@ -19,7 +19,7 @@ function response(req, res, apiData) {
   // Prepare to get list of all modules that have to be loaded for this route
   let modules = [];
 
-  let mainApp = ReactDOMServer.renderToString(
+  ReactDOMServer.renderToString(
     <Loadable.Capture report={moduleName => modules.push(moduleName)}>
       <App req={req} />
     </Loadable.Capture>

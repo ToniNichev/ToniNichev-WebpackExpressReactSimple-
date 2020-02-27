@@ -6,9 +6,9 @@ const dotenvFiles = [
 // expose environment variables to the frontend
 const frontendConstants = [
   'APP_NAME',
-  'GRAPHQL_URL',
+  'APP_HOST',
   'PROD_SERVER_PORT',
-  'BRANDS'
+  'DEV_CLIENT_PORT'
 ];
 function getEnvironmentConstants() {
   
@@ -25,7 +25,10 @@ function getEnvironmentConstants() {
   const arrayToObject = (array) =>
   array.reduce((obj, item, key) => {
     obj[item] = JSON.stringify(process.env[item]);
-    return obj
+
+    // obj[item] = process.env[item];
+    //console.log(process.env[item]);
+    return obj;
   }, {})
   return arrayToObject(frontendConstants);      
 }

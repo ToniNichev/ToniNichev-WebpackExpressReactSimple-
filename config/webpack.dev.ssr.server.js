@@ -1,13 +1,12 @@
+const getEnvironmentConstants = require('../getEnvironmentConstants');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const webpack =require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const getEnvironmentConstants = require('../getEnvironmentConstants');
 const NodemonPlugin = require('nodemon-webpack-plugin');
 
-const WEBPACK_PORT = 3007;
-
+const env = getEnvironmentConstants();
 
 module.exports = {
   mode: 'development',
@@ -25,7 +24,7 @@ module.exports = {
   output: {
     filename: '[name]-bundle.js',
     path: path.resolve(__dirname, '../', 'server-build'),
-    publicPath: `http://localhost:8000/dist/`
+    publicPath: `http://${env.APP_HOST}:${env.DEV_SERVER_PORT}/dist/`
   },  
   
   module: {
@@ -96,7 +95,7 @@ module.exports = {
     new webpack.DefinePlugin({ 'process.env' : getEnvironmentConstants() } ),  
 
     new NodemonPlugin({
-      watch: path.resolve('./server-build'),
+      watch: path.resolve('./dist'),
       ext: 'js,json,jsx',
       script: `./server-build/server-bundle.js`,
       verbose: true,

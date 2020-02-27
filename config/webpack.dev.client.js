@@ -1,9 +1,17 @@
+const getEnvironmentConstants = require('../getEnvironmentConstants');
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const Loadable  = require('react-loadable/webpack');
-const getEnvironmentConstants = require('../getEnvironmentConstants');
 const path = require('path');
+
+let env = getEnvironmentConstants();
+
+const publicPath = `http://${env.APP_HOST}:${env.DEV_CLIENT_PORT}/dist/`;
+
+console.log(">>>>>>>>>>", env.APP_HOST);
+
+//console.log(">>>>>>>>>>", env.APP_HOST.split('"').join(''));
 
 const projectRootPath = path.resolve(__dirname, '../');
 
@@ -29,6 +37,7 @@ module.exports = {
   output: {
     path: `${projectRootPath}/src`,    
     filename: '[name]-bundle.js',
+    //publicPath: `http://${env.APP_HOST}:${env.DEV_CLIENT_PORT}/dist/`
     publicPath: `http://localhost:8000/dist/`
   },  
 

@@ -7,7 +7,7 @@ const AboutContainer = (state) => {
   const [which, setWhich] = useState(false);
 
   function handleChange() {
-    const userName = 'TEST';
+    const userName = 'TEST1231221';
     state.onEdit(userName);
   }
 
@@ -20,7 +20,7 @@ const AboutContainer = (state) => {
   return (
     <div className={styles.wrapper}>
       {!which ? componentA : componentB}
-      <button onClick={ () => {switchComponents() } }>TEST</button>
+      <button onClick={ () => {switchComponents() } }>TEST 111111</button>
     </div>
   );
 
