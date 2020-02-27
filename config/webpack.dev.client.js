@@ -68,6 +68,9 @@ module.exports = {
           },
           {
             loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },             
           }
         ],
       },
@@ -97,7 +100,7 @@ module.exports = {
       }),
 
     // hot reload
-    new webpack.HotModuleReplacementPlugin({multiStep: true}),
+    new webpack.HotModuleReplacementPlugin(),
 
     new MiniCssExtractPlugin({
         // these are optional
