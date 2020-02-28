@@ -1,7 +1,5 @@
 const getEnvironmentConstants = require('../getEnvironmentConstants');
 const webpack = require('webpack');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const Loadable  = require('react-loadable/webpack');
 const path = require('path');
 
@@ -50,7 +48,7 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          'style-loader',
           {
             loader: 'css-loader',
             options: {
@@ -102,14 +100,6 @@ module.exports = {
       }),
 
     // hot reload
-    new webpack.HotModuleReplacementPlugin(),
-
-    new MiniCssExtractPlugin({
-        // these are optional
-        filename: "[name].css",
-        chunkFilename: "[id].css"
-    }),
-    
-    new OptimizeCSSAssetsPlugin({})    
+    new webpack.HotModuleReplacementPlugin() 
   ]
 };
