@@ -20,7 +20,7 @@ const AboutContainer = (state) => {
   return (
     <div className={styles.wrapper}>
       {!which ? componentA : componentB}
-      <button onClick={ () => {switchComponents() } }>TEST 111111</button>
+      <button onClick={ () => {switchComponents() } }>TEST</button>
     </div>
   );
 

@@ -11,6 +11,7 @@ const projectRootPath = path.resolve(__dirname, '../');
 
 module.exports = {
   mode: 'development',
+  
   devtool: 'source-map',
 
   entry: [
@@ -23,6 +24,7 @@ module.exports = {
     },
     headers: { 'Access-Control-Allow-Origin': '*' },
     disableHostCheck: true,
+    contentBase: __dirname + '/src',
     hot: true,
     port: process.env.ASSETS_SERVER_PORT,
     noInfo: true,
